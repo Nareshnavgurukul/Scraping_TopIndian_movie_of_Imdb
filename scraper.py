@@ -27,7 +27,7 @@ from bs4 import BeautifulSoup
 def scrape_top_list():
 	url = "https://www.imdb.com/india/top-rated-indian-movies/?ref_=nv_mv_250_in"
 	html = urlopen(url)
-	Obj_soup = BeautifulSoup(html,"lxml")
+	Obj_soup = BeautifulSoup(html,"html.parser")
 
 	title = Obj_soup.title.get_text()#here it will assign   title value
 
@@ -110,12 +110,13 @@ def group_by_year(movies):
 	moviename.close()
 	return(dec_years)# Movies name of all the same year==========
 group_by_year(Movies)
+dec_arg = group_by_year(Movies)
+
 
 def group_by_decade(movies):
-	movies_by_year = group_by_year(movies)
 	moviedec = {}
 	list1 = []
-	for index in movies_by_year:#years
+	for index in movies:#years
 		Mod = index%10
 		decate = index-Mod
 		if decate not in list1:
@@ -126,13 +127,13 @@ def group_by_decade(movies):
 
 	for i in moviedec:
 		dec10 = i + 9
-		for x in movies_by_year:
+		for x in movies:
 			if x <= dec10 and x>=i:
-				for v in movies_by_year[x]:	
+				for v in movies[x]:	
 					moviedec[i].append(v)
 
 	return(moviedec)					
-group_by_decade(Movies)
+group_by_decade(dec_arg)
 
 def get_all_urls():
 	link = "https://www.imdb.com/india/top-rated-indian-movies/?ref_=nv_mv_250_in"
