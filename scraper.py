@@ -121,6 +121,7 @@ def group_by_decade(movies):
 		decate = index-Mod
 		if decate not in list1:
 			list1.append(decate)#it is creating list of decates
+	list1.sort()
 
 	for i in list1:
 		moviedec[i]=[]
