@@ -1,11 +1,11 @@
-from urllib.request import urlopen
+import requests
 from bs4 import BeautifulSoup
 
 
 def get_all_urls():
 	link = "https://www.imdb.com/india/top-rated-indian-movies/?ref_=nv_mv_250_in"
-	html = urlopen(link)
-	Obj_soup = BeautifulSoup(html,"lxml")
+	html = requests(link)
+	Obj_soup = BeautifulSoup(html.text,"html.parser")
 	
 	Object = Obj_soup.find_all("td",class_="titleColumn")
 	linklist = []
