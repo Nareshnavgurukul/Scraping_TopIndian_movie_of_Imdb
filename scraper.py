@@ -1,33 +1,10 @@
-from urllib.request import urlopen
+import requests
 from bs4 import BeautifulSoup
-
-#step 1
-# In the first step it have contain all the details of movie
-#{'name': 'Anand', 'year_of_release': 1971, 'position': 1, 'rating': 8.7} , {}, {}, {}, {}]
-# 1. year_of_release should be an integer.
-# 2. positon should be an integer.
-# 3. rating should be a float.
-# 4. name should be a string. 
-#
-#Step 2
-#{
-# 1956: [
-#   {'name': 'Koi movie ka naam', 'year_of_release': 1956, 'position': 1, 'rating': 8.7},
-#   {'name': 'Kuch aur naam', 'year_of_release': 1956, 'position': 4, 'rating': 8.7}],
-# 1959: [
-# {'name': 'Koi movie ka naam 2', 'year_of_release': 1959, 'position':34, 'rating': 8.7}]}
-
-# step 3
-# 1.1960 se 1969 tak ke beech ke saare saal 1960s ke decade mein aate hain.
-# 2. 1970 se 1979 tak ke beech ke saare saal 1970s ke decade mein aate hain.
-# 3. 1980 se 1989 tak ke beech ke saare saal 1980s ke decade mein aate hain.
-# 4. 2000 se 2009 tak ke beech ke saare saal 2000s ke decade mein aate hain.
-# 
 
 def scrape_top_list():
 	url = "https://www.imdb.com/india/top-rated-indian-movies/?ref_=nv_mv_250_in"
-	html = urlopen(url)
-	Obj_soup = BeautifulSoup(html,"html.parser")
+	html = requests.get(url)
+	Obj_soup = BeautifulSoup(html.text,"html.parser")
 
 	title = Obj_soup.title.get_text()#here it will assign   title value
 
@@ -127,7 +104,7 @@ def group_by_decade(movies):
 		moviedec[i]=[]
 
 	for i in moviedec:
-		dec10 = i + 9
+		dec10 = i + 9urlopen
 		for x in movies:
 			if x <= dec10 and x>=i:
 				for v in movies[x]:	
@@ -138,8 +115,8 @@ group_by_decade(dec_arg)
 
 def get_all_urls():
 	link = "https://www.imdb.com/india/top-rated-indian-movies/?ref_=nv_mv_250_in"
-	html = urlopen(link)
-	Obj_soup = BeautifulSoup(html,"lxml")
+	html = requests.get(link)
+	Obj_soup = BeautifulSoup(html.text,"html.parser")
 	title = Obj_soup.title.get_text()
 	
 	Object = Obj_soup.find_all("td",class_="titleColumn")
@@ -151,84 +128,83 @@ def get_all_urls():
 	return linklist
 url_list = get_all_urls()[:20]
 
-
 def extract_movie_details(movie_url):
-	index = 0
-	index+=1
-	i = movie_url
-	html = urlopen(i)
-	Obj_soup = BeautifulSoup(html,"lxml")
-	
-	dic_to_store_moviedeta = {"Name of movie":"","Director":"","Bio of the Movie":"","Runtime":"","URL of Poster":"","genre":"","Country":"","Language":""}
-	genrelist=[]
-	listdir = []
-	moviedetail = []
-
-	name = Obj_soup.find("div",class_="title_wrapper")
-	Name = name.find("h1").get_text()
-	Namemovie = Name.split()
-
-	dic_to_store_moviedeta["Name of movie"] = "".join(Namemovie[:-1])
-
-	poster = Obj_soup.find("div",class_="poster")#it have contain a tag with img src
-	imgtag = (poster.find("img"))
-
-	Subtext = Obj_soup.find("div",class_="subtext")#.a.get_text()
-	subtext=Subtext.find_all("a")
+	Task4 = []
+	for i in movie_url:
+		html = requests.get(i)
+		Obj_soup = BeautifulSoup(html.text,"html.parser")
 		
-		#below I have list of all anker tag 
-	Subtext = Obj_soup.find("div",class_="subtext").time.get_text()
-	Time = Subtext.strip().split()
-	if len(Time) == 2:
-		Timeh = Time[0][:-1]
-		TimeM = Time[1][:-3]
-		time = (int(Timeh)*60)+int(TimeM)
-		dic_to_store_moviedeta["Runtime"]=str(time)+""+"min"
+		dic_to_store_moviedeta = {"Name of movie":"","Director":"","Bio of the Movie":"","Runtime":"","URL of Poster":"","genre":"","Country":"","Language":""}
+		genrelist=[]
+		listdir = []
+		moviedetail = []
 
-	if len(Time) == 1:
-		Timeh = Time[0][:-1]
-		time = int(Timeh)*60	
-		dic_to_store_moviedeta["Runtime"]=str(time)+""+"min"
+		name = Obj_soup.find("div",class_="title_wrapper")
+		Name = name.find("h1").get_text()
+		Namemovie = Name.split()
 
-	
-	dic_to_store_moviedeta["URL of Poster"] = imgtag["src"] #this is the url of poster
+		dic_to_store_moviedeta["Name of movie"] = "".join(Namemovie[:-1])
 
-	direct = Obj_soup.find("div",class_="credit_summary_item")
-	Alldirect = direct.find_all("a")
+		poster = Obj_soup.find("div",class_="poster")#it have contain a tag with img src
+		imgtag = (poster.find("img"))
 
-	for Namedir in Alldirect:
-		listdir.append(Namedir.get_text())
-	dic_to_store_moviedeta["Director"]=listdir
-	listdir = []
+		Subtext = Obj_soup.find("div",class_="subtext")#.a.get_text()
+		subtext=Subtext.find_all("a")
+			
+			#below I have list of all anker tag 
+		Subtext = Obj_soup.find("div",class_="subtext").time.get_text()
+		Time = Subtext.strip().split()
+		if len(Time) == 2:
+			Timeh = Time[0][:-1]
+			TimeM = Time[1][:-3]
+			time = (int(Timeh)*60)+int(TimeM)
+			dic_to_store_moviedeta["Runtime"]=str(time)+""+"min"
 
+		if len(Time) == 1:
+			Timeh = Time[0][:-1]
+			time = int(Timeh)*60	
+			dic_to_store_moviedeta["Runtime"]=str(time)+""+"min"
 
-	Bio = Obj_soup.find("div",class_="summary_text")
-	dic_to_store_moviedeta["Bio of the Movie"]=Bio.get_text().strip()
-	find_drc = Obj_soup.find("div",class_="subtext")
-	listOfa = find_drc.find_all("a")#list of a tag
-	
-	for i in range(len(listOfa)-1):
-		genrelist.append(listOfa[i].get_text())
-
-	dic_to_store_moviedeta["genre"]=genrelist
 		
-	genrelist=[]
+		dic_to_store_moviedeta["URL of Poster"] = imgtag["src"] #this is the url of poster
 
-	country = Obj_soup.find_all("div",class_="txt-block")
-	for count in country:
-		h=count.find_all("h4")
-		for m in h:
-			if (m.get_text() == "Country:"):
-				dic_to_store_moviedeta["Country"]=count.find("a").get_text()
-				break
-			if (m.get_text() == "Language:"):
-				languages = count.find_all("a")
-				lang = []
-				for lan in languages:
-					lang.append(lan.get_text())
-				dic_to_store_moviedeta["Language"] = lang
-	return(dic_to_store_moviedeta)
-extract_movie_details(url_list[0])
+		direct = Obj_soup.find("div",class_="credit_summary_item")
+		Alldirect = direct.find_all("a")
+
+		for Namedir in Alldirect:
+			listdir.append(Namedir.get_text())
+		dic_to_store_moviedeta["Director"]=listdir
+		listdir = []
+
+
+		Bio = Obj_soup.find("div",class_="summary_text")
+		dic_to_store_moviedeta["Bio of the Movie"]=Bio.get_text().strip()
+		find_drc = Obj_soup.find("div",class_="subtext")
+		listOfa = find_drc.find_all("a")#list of a tag
+		
+		for i in range(len(listOfa)-1):
+			genrelist.append(listOfa[i].get_text())
+
+		dic_to_store_moviedeta["genre"]=genrelist
+			
+		genrelist=[]
+
+		country = Obj_soup.find_all("div",class_="txt-block")
+		for count in country:
+			h=count.find_all("h4")
+			for m in h:
+				if (m.get_text() == "Country:"):
+					dic_to_store_moviedeta["Country"]=count.find("a").get_text()
+					break
+				if (m.get_text() == "Language:"):
+					languages = count.find_all("a")
+					lang = []
+					for lan in languages:
+						lang.append(lan.get_text())
+					dic_to_store_moviedeta["Language"] = lang
+		Task4.append(dic_to_store_moviedeta)
+	return(Task4)
+extract_movie_details(url_list)
 
 list1 = []
 def get_movie_list_details(movies):
