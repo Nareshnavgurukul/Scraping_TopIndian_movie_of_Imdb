@@ -104,7 +104,7 @@ def group_by_decade(movies):
 		moviedec[i]=[]
 
 	for i in moviedec:
-		dec10 = i + 9urlopen
+		dec10 = i + 9
 		for x in movies:
 			if x <= dec10 and x>=i:
 				for v in movies[x]:	
