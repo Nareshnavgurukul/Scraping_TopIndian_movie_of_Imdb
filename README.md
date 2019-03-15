@@ -10,14 +10,14 @@ As learning purpose
   },
   {}, {}, {}, {}
 ]
-#Task 2
+# Task 2
 {
   1956: [
     {'name': 'Koi movie ka naam', 'year': 1956, 'position': 1, 'rating': 8.7, 'url': 'https://imdb.com/title/koi-title-ka-link'},
     {'name': 'Kuch aur naam', 'year': 1956, 'position': 4, 'rating': 8.7, 'url': 'https://imdb.com/title/koi-title-ka-link'},
     {'name': 'Ek aur naam', 'year': 1956, 'position': 8, 'rating': 8.7, 'url': 'https://imdb.com/title/koi-title-ka-link'}
   ],[],[],[]}
- #Task 3
+ # Task 3
  {
   1950: [
     {'name': 'Koi movie ka naam', 'year_of_release': 1956, 'position': 1, 'rating': 8.7, 'url': 'https://imdb.com/title/koi-title-ka-link'},
@@ -32,7 +32,7 @@ As learning purpose
     {},
     {},
    }
-#Task 4
+# Task 4
 [
 	{
 		"name": "Anand"
@@ -46,7 +46,7 @@ As learning purpose
 			"Drama"
 		]
 	}]
-  #Task 5 
+  # Task 5 
   also like task 4
   #Task 6
   DEF analyse_movies_language()
@@ -55,14 +55,14 @@ As learning purpose
 	"English": 4,
 	"Malyalam": 4
 }
-#Task 7
+# Task 7
 analyse_movies_director
 {
 "Rishabh Verma": 2,
 "Hrishikesh Mukherjee": 1,
 "Sanjay Leela Bansali": 2
 }
-#Task 8,9
+# Task 8,9
 creating cache file in json
 ID.json,ID.json
 #Task 9
@@ -70,7 +70,7 @@ import random
 help(random.randint)
 import time
 help(time.sleep)
-#Task 10
+# Task 10
 {
   "Hrishikesh Mukherjee": {
     "Hindi": 2,
@@ -81,13 +81,13 @@ help(time.sleep)
     "Malayalam": 2
   }
 }
-#Task 11
+# Task 11
 defanalyse_movies_genre()
 {
   "Comedy": 133,
   "Drama": 23
 }
-#Task 12
+# Task 12
 [
   {
     "imdb_id": "nm0004435",
@@ -99,7 +99,7 @@ defanalyse_movies_genre()
   },
   {},
   {}]}
- #Task 13
+ # Task 13
  {
 	"name": "Anand"
 	"director": ["Hrishikesh Mukherjee"],
@@ -126,7 +126,7 @@ defanalyse_movies_genre()
     {}
   ]
 }
-#Task 14
+# Task 14
 {
   "nm0004435": {
     "name": "Rajesh Khanna",
