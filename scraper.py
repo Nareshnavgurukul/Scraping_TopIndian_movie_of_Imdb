@@ -4,7 +4,7 @@ import os
 import random
 import pprint
 from bs4 import BeautifulSoup
-
+userinput =  int(input("How many movies you wants? "))
 #Task 1 scrape_top_list
 def scrape_top_list():
 	url = "https://www.imdb.com/india/top-rated-indian-movies/?ref_=nv_mv_250_in"
@@ -117,8 +117,7 @@ def get_all_urls():
 		link = "https://www.imdb.com"+newurl#every time url change
 		linklist.append(link)
 	return linklist
-url_list20 = get_all_urls()[:20]
-Top_250_URls = get_all_urls()#this variable for task 9
+url_list20 = get_all_urls()[:userinput]
 
 def scrape_movie_cast(movie_caste_url):
 	castdetails = []
@@ -255,8 +254,7 @@ def get_movie_list_details(movies_list):
 	for url in movies_list:
 		movie.append(scrape_movie_details(url))
 	return(movie)
-analyse = get_movie_list_details(url_list20)#20 url arguments
-analyse250 = get_movie_list_details(Top_250_URls)
+analyse = get_movie_list_details(url_list)#20 url arguments
 
 # Task 6
 def analyse_movies_language(movies):
@@ -349,7 +347,7 @@ movies_genre = analyse_movies_genre(analyse)
 
 #task 13 is in the scrape_movie_details()
 	
-#Task = 15
+#Task = 14
 def analyse_actors(movies_list):
 	actors_dict = {}
 	for Dict in movies_list:
@@ -364,5 +362,5 @@ def analyse_actors(movies_list):
 			if no_flag > 1:
 				actors_dict[actor['imdb_id']] = {'name':actor['name'],'num_movies':no_flag}
 	return actors_dict
-AnalayseAct = analyse_actors(analyse250)
+AnalayseAct = analyse_actors(analyse)
 # pprint.pprint(AnalayseAct)
