@@ -119,6 +119,7 @@ def get_all_urls():
 	return linklist
 url_list20 = get_all_urls()[:userinput]
 
+#task12
 def scrape_movie_cast(movie_caste_url):
 	castdetails = []
 	html = requests.get(movie_caste_url)
