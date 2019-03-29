@@ -117,7 +117,7 @@ def get_all_urls():
 		link = "https://www.imdb.com"+newurl#every time url change
 		linklist.append(link)
 	return linklist
-url_list20 = get_all_urls()[:userinput]
+url_list = get_all_urls()[:userinput]
 
 #task12
 def scrape_movie_cast(movie_caste_url):
@@ -247,7 +247,7 @@ def scrape_movie_details(movie_url):
 					file.write(convert)
 					file.close()
 	return(dic_to_store_moviedeta)# To scrape all 20 movie details 
-scrape_movie_details(url_list20[0])#will scrape movie detail fron 1 to 20 only of each movie
+scrape_movie_details(url_list[0])#will scrape movie detail fron 1 to 20 only of each movie
 
 # Task 5
 def get_movie_list_details(movies_list):
