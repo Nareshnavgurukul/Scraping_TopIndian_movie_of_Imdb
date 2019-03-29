@@ -165,87 +165,84 @@ def scrape_movie_details(movie_url):
 		Read = open("/home/naresh/Desktop/IMDB/DataIMDB_20/"+fileName)
 		scraper = Read.read()
 		return(scraper)
-	else:
 
-	# scraper = None
-	# if scraper is None:# scraper = /home/naresh/Desktop/IMDB/DataIMDB_20/"+fileName
-		#Task 9
-		ran_time = random.randint(1,3)
-		time.sleep(ran_time)
-		#Task-4 
-		html = requests.get(movie_url)
-		Obj_soup = BeautifulSoup(html.text,"html.parser")
-		dic_to_store_moviedeta = {"Name of movie":"","Director":"","Bio of the Movie":"","Runtime":"","URL of Poster":"","genre":"","Country":"","Language":""}
-		genrelist=[]
-		listdir = []
-		moviedetail = []
-		name = Obj_soup.find("div",class_="title_wrapper")
-		Name = name.find("h1").get_text()
-		Namemovie = Name.split()
-		dic_to_store_moviedeta["Name of movie"] = "".join(Namemovie[:-1])
-		poster = Obj_soup.find("div",class_="poster")#it have contain a tag with img src
-		imgtag = (poster.find("img"))
-		Subtext = Obj_soup.find("div",class_="subtext")#.a.get_text()
-		subtext=Subtext.find_all("a")
-			
-		#below I have list of all anker tag 
-		Subtext = Obj_soup.find("div",class_="subtext").time.get_text()
-		Time = Subtext.strip().split()
-		if len(Time) == 2:
-			Timeh = Time[0][:-1]
-			TimeM = Time[1][:-3]
-			time = (int(Timeh)*60)+int(TimeM)
-			dic_to_store_moviedeta["Runtime"]=str(time)+""+"min"
+	#Task 9
+	ran_time = random.randint(1,3)
+	time.sleep(ran_time)
+	#Task-4 
+	html = requests.get(movie_url)
+	Obj_soup = BeautifulSoup(html.text,"html.parser")
+	dic_to_store_moviedeta = {"Name of movie":"","Director":"","Bio of the Movie":"","Runtime":"","URL of Poster":"","genre":"","Country":"","Language":""}
+	genrelist=[]
+	listdir = []
+	moviedetail = []
+	name = Obj_soup.find("div",class_="title_wrapper")
+	Name = name.find("h1").get_text()
+	Namemovie = Name.split()
+	dic_to_store_moviedeta["Name of movie"] = "".join(Namemovie[:-1])
+	poster = Obj_soup.find("div",class_="poster")#it have contain a tag with img src
+	imgtag = (poster.find("img"))
+	Subtext = Obj_soup.find("div",class_="subtext")#.a.get_text()
+	subtext=Subtext.find_all("a")
 
-		if len(Time) == 1:
-			Timeh = Time[0][:-1]
-			time = int(Timeh)*60	
-			dic_to_store_moviedeta["Runtime"]=str(time)+""+"min"
+	#below I have list of all anker tag 
+	Subtext = Obj_soup.find("div",class_="subtext").time.get_text()
+	Time = Subtext.strip().split()
+	if len(Time) == 2:
+		Timeh = Time[0][:-1]
+		TimeM = Time[1][:-3]
+		time = (int(Timeh)*60)+int(TimeM)
+		dic_to_store_moviedeta["Runtime"]=str(time)+""+"min"
 
-		dic_to_store_moviedeta["URL of Poster"] = imgtag["src"] #this is the url of poster
+	if len(Time) == 1:
+		Timeh = Time[0][:-1]
+		time = int(Timeh)*60	
+		dic_to_store_moviedeta["Runtime"]=str(time)+""+"min"
 
-		direct = Obj_soup.find("div",class_="credit_summary_item")
-		Alldirect = direct.find_all("a")
+	dic_to_store_moviedeta["URL of Poster"] = imgtag["src"] #this is the url of poster
 
-		for Namedir in Alldirect:
-			listdir.append(Namedir.get_text())
-		dic_to_store_moviedeta["Director"]=listdir
-		listdir = []
+	direct = Obj_soup.find("div",class_="credit_summary_item")
+	Alldirect = direct.find_all("a")
 
-		Bio = Obj_soup.find("div",class_="summary_text")
-		dic_to_store_moviedeta["Bio of the Movie"]=Bio.get_text().strip()
-		find_drc = Obj_soup.find("div",class_="subtext")
-		listOfa = find_drc.find_all("a")#list of a tag
-		
-		for i in range(len(listOfa)-1):
-			genrelist.append(listOfa[i].get_text())
-		dic_to_store_moviedeta["genre"]=genrelist
-	
-		genrelist=[]
-		country = Obj_soup.find_all("div",class_="txt-block")
-		for count in country:
-			h=count.find_all("h4")
-			for m in h:
-				if (m.get_text() == "Country:"):
-					dic_to_store_moviedeta["Country"]=count.find("a").get_text()
-					break
-				if (m.get_text() == "Language:"):
-					languages = count.find_all("a")
-					lang = []
-					for lan in languages:
-						lang.append(lan.get_text())
-					dic_to_store_moviedeta["Language"] = lang
+	for Namedir in Alldirect:
+		listdir.append(Namedir.get_text())
+	dic_to_store_moviedeta["Director"]=listdir
+	listdir = []
 
-					#Task = 13
-					cast_url = "https://www.imdb.com/title/"+ID+"/fullcredits?ref_=tt_cl_sm#cast"
-					MovieCast = scrape_movie_cast(cast_url)
-					dic_to_store_moviedeta["cast"] = MovieCast
-					#Task-8 storing data into json file 
-					fileName = ID +".json"
-					file = open("/home/naresh/Desktop/IMDB/DataIMDB_20/"+fileName,"w+")# if you are runimg this code so u have to change path of file
-					convert = json.dumps(dic_to_store_moviedeta)	
-					file.write(convert)
-					file.close()
+	Bio = Obj_soup.find("div",class_="summary_text")
+	dic_to_store_moviedeta["Bio of the Movie"]=Bio.get_text().strip()
+	find_drc = Obj_soup.find("div",class_="subtext")
+	listOfa = find_drc.find_all("a")#list of a tag
+
+	for i in range(len(listOfa)-1):
+		genrelist.append(listOfa[i].get_text())
+	dic_to_store_moviedeta["genre"]=genrelist
+
+	genrelist=[]
+	country = Obj_soup.find_all("div",class_="txt-block")
+	for count in country:
+		h=count.find_all("h4")
+		for m in h:
+			if (m.get_text() == "Country:"):
+				dic_to_store_moviedeta["Country"]=count.find("a").get_text()
+				break
+			if (m.get_text() == "Language:"):
+				languages = count.find_all("a")
+				lang = []
+				for lan in languages:
+					lang.append(lan.get_text())
+				dic_to_store_moviedeta["Language"] = lang
+
+				#Task = 13
+				cast_url = "https://www.imdb.com/title/"+ID+"/fullcredits?ref_=tt_cl_sm#cast"
+				MovieCast = scrape_movie_cast(cast_url)
+				dic_to_store_moviedeta["cast"] = MovieCast
+				#Task-8 storing data into json file 
+				fileName = ID +".json"
+				file = open("/home/naresh/Desktop/IMDB/DataIMDB_20/"+fileName,"w+")# if you are runimg this code so u have to change path of file
+				convert = json.dumps(dic_to_store_moviedeta)	
+				file.write(convert)
+				file.close()
 	return(dic_to_store_moviedeta)# To scrape all 20 movie details 
 scrape_movie_details(url_list[0])#will scrape movie detail fron 1 to 20 only of each movie
 
