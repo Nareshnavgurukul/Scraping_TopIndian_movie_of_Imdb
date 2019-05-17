@@ -36,18 +36,11 @@ def scrape_top_list():
 		eachMovie["Position"]=index
 		eachMovie["Rating"]=rating
 		#here dec____will append in the list.
-		movies.append(eachMovie)
-	store_data = open("information_of_movies.txt","w+")
-
-	for i in movies:
-		data = ''
-		for j in i:	
-			data = data+ str(i[j])+" "
-		store_data.write(data + '\n\n')
-	store_data.close()
+		movies.append(eachMovie.copy())
 	return(movies)
 Movies = scrape_top_list()
 # pprint.pprint(Movies)
+
 
 #Task 2 group_by_year
 def group_by_year(movies):
