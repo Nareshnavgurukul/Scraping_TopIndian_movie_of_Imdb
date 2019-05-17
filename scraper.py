@@ -35,8 +35,7 @@ def scrape_top_list():
 		eachMovie["year_of_release"]=Year
 		eachMovie["Position"]=index
 		eachMovie["Rating"]=rating
-		#here dec____
-		 will append in the list.
+		#here dec____will append in the list.
 		movies.append(eachMovie)
 	store_data = open("information_of_movies.txt","w+")
 
